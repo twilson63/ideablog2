@@ -1,0 +1,72 @@
+<div class="container">
+  <div class="hero-unit">
+    <h1>
+      <i class="icon-lightbulb"></i>
+      Idea Blog
+    </h1>
+    <p>Zen and the art of blogging...</p>
+  </div>
+  <div class="span5 offset3">
+    <form class="well" name="form">
+      <legend>Register</legend>
+      <p>Sign Up now and get started blogging...</p>
+      <div class="control-group">
+        <label class="control-label">Email</label>
+        <div class="controls">
+          <input class="span4" type="email" ng-model="user.email">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Username</label>
+        <div class="controls">
+          <input class="span4" type="text" ng-model="user.name">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Password</label>
+        <div class="controls">
+          <input class="span4" type="password" ng-model="user.password">
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label">Confrim</label>
+        <div class="controls">
+          <input class="span4" type="password" ng-model="user.confirm_password">
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <button class="btn btn-primary btn-large span2" ng-click="login()">Login</button>
+          <button class="btn btn-primary btn-large span2" ng-disabled="form.$invalid" ng-click="register(user)">Sign up</button>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
+<!-- I am adding the login dialog here because I am not sure where it goes exactly -->
+
+<div class="modal-header">
+  <h2>Login</h2>
+</div>
+<div class="modal-body">
+  <form>
+    <div class="control-group">
+      <label class="control-label">Username</label>
+      <div class="controls">
+        <input type="text" ng-model="user.name">
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Password</label>
+      <div class="controls">
+        <input type="password" ng-model="user.password">
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" ng-click="login(user)">Login</button>
+</div>

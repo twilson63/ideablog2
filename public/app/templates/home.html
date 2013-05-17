@@ -1,0 +1,11 @@
+<div class="container">
+  <div class="hero-unit">
+    <h1>{{user}}</h1>
+  </div>
+  <article class="offset1" ng-repeat="article in articles | orderBy: 'publishedAt' ">
+    <header>
+      <h2>{{article.title}}</h2>
+    </header>
+    <div ng-bind-html-unsafe="article.body | markdown"></div>
+  </article>
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+  <form>
+    <legend>{{mode}}Article</legend>
+    <div class="control-group">
+      <label class="control-label">Title</label>
+      <div class="controls">
+        <input class="span10 title" type="text" ng-model="article.title" required>
+        <div>{{article.slug}}</div>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label">Body</label>
+      <div class="help-block">Separate Leader from rest of body using the <code>&lt;!-- more --&gt;</code> element</div>
+      <div class="controls">
+        <textarea class="body" ui-codemirror="{theme: 'monokai', mode: 'markdown'}" ng-model="article.body"></textarea>
+      </div>
+    </div>
+    <div class="control-group pull-right">
+      <button class="btn btn-warning btn-large" ng-click="cancel()">Cancel</button>
+      <button class="btn btn-primary btn-large" ng-click="save(article)">
+        <i class="icon-cloud-upload"></i>
+        Save
+      </button>
+    </div>
+
+  </form>
+</div>
+
+
+<!-- More code I'm not sure what to do with. 
+It is titled article-new.js, but im sure that is a typo-->
+
+<div class="control-group">
+  <label class="control-label">Attachments</label>
+  <ul>
+    <li ng-repeat="image in article.images">
+      <code>{{image | mdImage}}</code>
+    </li>
+  </ul>
+  <!-- list attachments doc name should be slug...-->
+  <div class="controls">
+    <upload-button class="btn btn-large" action="/api/uploads" complete="uploadComplete($data)">
+    <i class="icon-picture"></i>
+    Upload Image
+    </upload-button>
+  </div>
+</div>
+
+
+
