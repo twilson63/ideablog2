@@ -27,4 +27,6 @@ angular.module('App').controller('ArticleEditCtrl', function($scope, $http, $rou
   $scope.cancel = function() {
     $location.path('/dashboard');
   };
+
+  
 });

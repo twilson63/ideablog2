@@ -38,7 +38,7 @@ angular.module('App').controller('SignupCtrl', function($scope, $http, $location
 
 // login controller
 
-app.controller('LoginCtrl', function($scope, $http, $location, authService, dialog) {
+angular.module('App').controller('LoginCtrl', function($scope, $http, $location, authService, dialog) {
   $scope.login = function(user) {
     $http.post('/api/login', user)
     .success(function(user) {

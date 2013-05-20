@@ -38,7 +38,7 @@ angular.module('App').controller('SignupCtrl', function($scope, $http, $location
 
 // login controller
 
-app.controller('LoginCtrl', function($scope, $http, $location, authService, dialog) {
+angular.module('App').controller('LoginCtrl', function($scope, $http, $location, authService, dialog) {
   $scope.login = function(user) {
     $http.post('/api/login', user)
     .success(function(user) {
@@ -88,20 +88,25 @@ angular.module('App').controller('ArticleEditCtrl', function($scope, $http, $rou
   $scope.cancel = function() {
     $location.path('/dashboard');
   };
+
+  
 });
 // article-new controller
 
-angular.module('App').controller('ArticleNewCtrl', function($scrope, $location, $http, $moment) {
+angular.module('App').controller('ArticleNewCtrl', 
+  function($scope, $location, $http, $moment, $routeParams) {
+  // create new article function
 
-});
 $http.get('/api/article/' + $routeParams.user + '/' + $routeParams.slug)
   .success(function(data) {
     $scope.article = data.rows[0].value;
     $scope.article.html = $markdown.toHTML($scope.article.body);
   });
+
+});
 //dashboard controller
 
-app.controller('DashboardCtrl', function($scope, $http, $location, $_) {
+angular.module('App').controller('DashboardCtrl', function($scope, $http, $location, $_) {
 
   $http.get('/api/article').success(function(data) {
     $scope.articles = $_(data.rows).pluck('value');
@@ -146,6 +151,13 @@ angular.module('App').controller('HomeCtrl', function($scope, $routeParams, $htt
   $http.get('/api/article/' + $routeParams.user + '/all/').success(function(data) {
     $scope.articles = $_(data.rows).pluck('value');
   });
+});
+app.filter('mdImage', function() {
+  return function(input) {
+    if (input) {
+      return ['![',input.name, '](/uploads/',input.path,')'].join('');
+    }
+  };
 });
 angular.module('App').value('$moment', moment);
 //Underscore moduler

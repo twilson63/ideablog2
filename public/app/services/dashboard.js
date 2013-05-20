@@ -1,6 +1,6 @@
 //dashboard controller
 
-app.controller('DashboardCtrl', function($scope, $http, $location, $_) {
+angular.module('App').controller('DashboardCtrl', function($scope, $http, $location, $_) {
 
   $http.get('/api/article').success(function(data) {
     $scope.articles = $_(data.rows).pluck('value');
