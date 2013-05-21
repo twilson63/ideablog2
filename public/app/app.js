@@ -13,7 +13,7 @@ angular.module('App', ['ui.bootstrap', 'ui.codemirror', 'http-auth-interceptor']
 
 
 // sign up controller and function from step 1.
-// I added the login function here, not sure if that is correct
+// I added the login function here.  The user has two options, sign up or login.  
 
 angular.module('App').controller('SignupCtrl', function($scope, $http, $location, $dialog) {
   
@@ -38,13 +38,15 @@ angular.module('App').controller('SignupCtrl', function($scope, $http, $location
 
 // login controller
 
-angular.module('App').controller('LoginCtrl', function($scope, $http, $location, authService, dialog) {
+angular.module('App').controller('LoginCtrl', function($scope, 
+  $http, $location, authService, dialog) {
   $scope.login = function(user) {
     $http.post('/api/login', user)
     .success(function(user) {
       dialog.close();
-      //alerts.push({type: 'success', msg : 'Successfully logged in.'});
+      //alert.push({type: 'success', msg : 'Successfully logged in.'});
       authService.loginConfirmed();
+      $location.path('/dashboard');
     })
     .error(function(err) {
       //alert error
@@ -53,7 +55,7 @@ angular.module('App').controller('LoginCtrl', function($scope, $http, $location,
 });
 
 
-// markdown services, no idea where they go
+// markdown services
 
 angular.module('App').value('$markdown');
 

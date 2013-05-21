@@ -1,6 +1,6 @@
 //dashboard controller
 
-angular.module('App').controller('DashboardCtrl', function($scope, $http, $location, $_) {
+App.controller('DashboardCtrl', function($scope, $http, $location, $_) {
 
   $http.get('/api/article').success(function(data) {
     $scope.articles = $_(data.rows).pluck('value');
@@ -20,6 +20,9 @@ angular.module('App').controller('DashboardCtrl', function($scope, $http, $locat
     $scope.article.author = data.user;
   });
 
+  // This function saves newly created posts.  It should also alert the user that
+  //  the item was saved correctly.  It should also return the user to the dashboard
+
   $scope.save = function(article) {
     article.type = 'article';
     article.slug = article.title.toLowerCase().replace(' ', '-');
@@ -30,7 +33,7 @@ angular.module('App').controller('DashboardCtrl', function($scope, $http, $locat
     });
   };
 
-// not sure it looks like it cancels?
+// If user selects cancel option they should be returned to the dashboard
 
   $scope.cancel = function () {
     $location.path('/dashboard');

@@ -13,7 +13,7 @@ angular.module('App', ['ui.bootstrap', 'ui.codemirror', 'http-auth-interceptor']
 
 
 // sign up controller and function from step 1.
-// I added the login function here, not sure if that is correct
+// I added the login function here.  The user has two options, sign up or login.  
 
 angular.module('App').controller('SignupCtrl', function($scope, $http, $location, $dialog) {
   
@@ -38,13 +38,15 @@ angular.module('App').controller('SignupCtrl', function($scope, $http, $location
 
 // login controller
 
-angular.module('App').controller('LoginCtrl', function($scope, $http, $location, authService, dialog) {
+angular.module('App').controller('LoginCtrl', function($scope, 
+  $http, $location, authService, dialog) {
   $scope.login = function(user) {
     $http.post('/api/login', user)
     .success(function(user) {
       dialog.close();
-      //alerts.push({type: 'success', msg : 'Successfully logged in.'});
+      //alert.push({type: 'success', msg : 'Successfully logged in.'});
       authService.loginConfirmed();
+      $location.path('/dashboard');
     })
     .error(function(err) {
       //alert error
@@ -53,7 +55,7 @@ angular.module('App').controller('LoginCtrl', function($scope, $http, $location,
 });
 
 
-// markdown services, no idea where they go
+// markdown services
 
 angular.module('App').value('$markdown');
 
@@ -96,7 +98,7 @@ angular.module('App').controller('ArticleEditCtrl', function($scope, $http, $rou
 angular.module('App').controller('ArticleNewCtrl', 
   function($scope, $location, $http, $moment, $routeParams) {
   // create new article function
-
+  //The article is converted from markdown to html 
 $http.get('/api/article/' + $routeParams.user + '/' + $routeParams.slug)
   .success(function(data) {
     $scope.article = data.rows[0].value;
@@ -106,7 +108,7 @@ $http.get('/api/article/' + $routeParams.user + '/' + $routeParams.slug)
 });
 //dashboard controller
 
-angular.module('App').controller('DashboardCtrl', function($scope, $http, $location, $_) {
+App.controller('DashboardCtrl', function($scope, $http, $location, $_) {
 
   $http.get('/api/article').success(function(data) {
     $scope.articles = $_(data.rows).pluck('value');
@@ -126,6 +128,9 @@ angular.module('App').controller('DashboardCtrl', function($scope, $http, $locat
     $scope.article.author = data.user;
   });
 
+  // This function saves newly created posts.  It should also alert the user that
+  //  the item was saved correctly.  It should also return the user to the dashboard
+
   $scope.save = function(article) {
     article.type = 'article';
     article.slug = article.title.toLowerCase().replace(' ', '-');
@@ -136,7 +141,7 @@ angular.module('App').controller('DashboardCtrl', function($scope, $http, $locat
     });
   };
 
-// not sure it looks like it cancels?
+// If user selects cancel option they should be returned to the dashboard
 
   $scope.cancel = function () {
     $location.path('/dashboard');
@@ -152,6 +157,9 @@ angular.module('App').controller('HomeCtrl', function($scope, $routeParams, $htt
     $scope.articles = $_(data.rows).pluck('value');
   });
 });
+//  This function takes uploaded items and creates a path for them
+//
+
 app.filter('mdImage', function() {
   return function(input) {
     if (input) {
